@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Intrusion Detection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(ellipse at center, #0f0f0f 0%, #050505 100%);
+      color: #00ffea;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(15, 15, 15, 0.8);
+      backdrop-filter: blur(12px);
+      border: 2px solid #00ffea33;
+      padding: 40px 30px;
+      border-radius: 15px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 15px #00ffea44;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      color: #00ffc8;
+      margin-bottom: 10px;
+      text-shadow: 0 0 5px #00ffd5;
+    }
+
+    p {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+      color: #cccccc;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #8ff;
+      font-size: 0.85rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      background: #1a1a1a;
+      border: 1px solid #00ffc855;
+      border-radius: 8px;
+      color: #00fff2;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #00ffea;
+      background-color: #111;
+    }
+
+    button.btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: #00ffea;
+      color: #111;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button.btn-submit:hover {
+      background: #00ffc8;
+    }
+
+    .prediction {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #111;
+      border-left: 4px solid #00ffea;
+      color: #00ffea;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 540px) {
+      .container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-lock"></i> IDS Prediction</h1>
+    <p>Enter network flow data to predict possible threats.</p>
+
+    <form method="POST" action="/predict">
+      <label for="flow_duration">Flow Duration</label>
+      <input type="number" step="any" name="flow_duration" required />
+
+      <label for="total_fwd_packets">Total Forward Packets</label>
+      <input type="number" step="any" name="total_fwd_packets" required />
+
+      <label for="total_backward_packets">Total Backward Packets</label>
+      <input type="number" step="any" name="total_backward_packets" required />
+
+      <label for="total_length_fwd_packets">Total Length of Forward Packets</label>
+      <input type="number" step="any" name="total_length_fwd_packets" required />
+
+      <button type="submit" class="btn-submit">Analyze Packet</button>
+    </form>
+
+    {% if prediction %}
+    <div class="prediction">
+      Prediction: {{ prediction }}
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
